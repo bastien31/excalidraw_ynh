@@ -1,7 +1,6 @@
 [Unit]
 Description=__APP__: collaborative Markdown notes
 After=network.target
-After=postgresql.service
 
 [Service]
 Type=simple
