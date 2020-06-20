@@ -1,7 +1,7 @@
-# CodiMD for YunoHost
+# Excalidraw for YunoHost
 
 [![Integration level](https://dash.yunohost.org/integration/codimd.svg)](https://dash.yunohost.org/appci/app/codimd) ![](https://ci-apps.yunohost.org/ci/badges/codimd.status.svg) ![](https://ci-apps.yunohost.org/ci/badges/codimd.maintain.svg)  
-[![Install CodiMD with YunoHost](https://install-app.yunohost.org/install-with-yunohost.png)](https://install-app.yunohost.org/?app=codimd)
+[![Install Excalidraw with YunoHost](https://install-app.yunohost.org/install-with-yunohost.png)](https://install-app.yunohost.org/?app=codimd)
 
 *[Lire ce readme en français.](./README_fr.md)*
 
@@ -19,7 +19,7 @@ CodiMD is a real-time collaborative word processing web service. It uses Markdow
 
 ## Demo
 
-* [Official demo](https://demo.codimd.org/)
+* [Official demo](https://excalidraw.com/)
 
 ## Configuration
 
