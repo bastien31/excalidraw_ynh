@@ -1,5 +1,5 @@
 [Unit]
-Description=__APP__: collaborative Markdown notes
+Description=Excalidraw
 After=network.target
 
 [Service]

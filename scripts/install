@@ -14,7 +14,7 @@ source /usr/share/yunohost/helpers
 #=================================================
 
 ynh_clean_setup () {
-	ynh_clean_check_starting
+	true
 }
 # Exit if an error occurs during the execution of the script
 ynh_abort_if_errors
@@ -24,7 +24,7 @@ ynh_abort_if_errors
 #=================================================
 
 domain=$YNH_APP_ARG_DOMAIN
-path_url="/"
+path_url=$YNH_APP_ARG_PATH
 is_public=$YNH_APP_ARG_IS_PUBLIC
 
 app=$YNH_APP_INSTANCE_NAME
@@ -57,7 +57,7 @@ ynh_app_setting_set --app=$app --key=is_public  --value=$is_public
 ynh_script_progression --message="Configuring firewall..." --weight=2
 
 # Find an available port
-port=$(ynh_find_port --port=3010)
+port=$(ynh_find_port --port=3000)
 ynh_app_setting_set --app=$app --key=port --value=$port
 
 #=================================================
@@ -72,21 +72,6 @@ ynh_exec_warn_less ynh_install_nodejs --nodejs_version=$nodejs_version
 
 # Install Yarn
 ynh_install_extra_app_dependencies --repo="deb https://dl.yarnpkg.com/debian/ stable main" --package="yarn" --key="https://dl.yarnpkg.com/debian/pubkey.gpg"
-
-# #=================================================
-# # CREATE A POSTGRESQL DATABASE
-# #=================================================
-# ynh_script_progression --message="Creating a PostgreSQL database..." --weight=2
-
-# db_name=$(ynh_sanitize_dbid --db_name=$app)
-# db_user=$db_name
-# db_pwd=$(ynh_string_random --length=30)
-
-# ynh_app_setting_set --app=$app --key=db_name --value=$db_name
-# ynh_app_setting_set --app=$app --key=db_pwd  --value=$db_pwd
-
-# ynh_psql_test_if_first_run
-# ynh_psql_setup_db --db_user=$db_user --db_name=$db_name --db_pwd=$db_pwd
 
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
@@ -124,7 +109,6 @@ pushd "$final_path" || ynh_die
 
 	ynh_use_nodejs
 	yarn install
-	#ynh_exec_warn_less yarn start
 
 popd || ynh_die
 
@@ -141,33 +125,6 @@ ynh_replace_string --match_string="__YNH_NPM__"      --replace_string="$ynh_npm"
 
 ynh_add_systemd_config
 
-# #=================================================
-# # MODIFY A CONFIG FILE
-# #=================================================
-# ynh_script_progression --message="Modifying a config file..."
-
-# # Main config File
-# ynh_replace_string --match_string="__PORT__"      --replace_string="$port"         --target_file="../conf/config.json.example"
-# ynh_replace_string --match_string="__DOMAIN__"    --replace_string="$domain"       --target_file="../conf/config.json.example"
-# ynh_replace_string --match_string="__PATH__"      --replace_string="${path_url:1}" --target_file="../conf/config.json.example"
-# ynh_replace_string --match_string="__DB_USER__"   --replace_string="$db_user"      --target_file="../conf/config.json.example"
-# ynh_replace_string --match_string="__DB_NAME__"   --replace_string="$db_name"      --target_file="../conf/config.json.example"
-# ynh_replace_string --match_string="__DB_PASS__"   --replace_string="$db_pwd"       --target_file="../conf/config.json.example"
-# ynh_replace_string --match_string="__APP__"       --replace_string="$app"          --target_file="../conf/config.json.example"
-
-# cp ../conf/config.json.example "$final_path/config.json"
-
-# ynh_store_file_checksum --file="$final_path/config.json"
-
-# # DB Config File
-# ynh_replace_string --match_string="__DB_USER__"   --replace_string="$db_user"      --target_file="../conf/.sequelizerc.example"
-# ynh_replace_string --match_string="__DB_NAME__"   --replace_string="$db_name"      --target_file="../conf/.sequelizerc.example"
-# ynh_replace_string --match_string="__DB_PASS__"   --replace_string="$db_pwd"       --target_file="../conf/.sequelizerc.example"
-
-# cp ../conf/.sequelizerc.example "$final_path/.sequelizerc"
-
-# ynh_store_file_checksum --file="$final_path/.sequelizerc"
-
 #=================================================
 # GENERIC FINALIZATION
 #=================================================
@@ -183,7 +140,7 @@ chown -R $app:$app $final_path
 #=================================================
 ynh_script_progression --message="Integrating service in YunoHost..."
 
-yunohost service add $app --description "Collaborative Markdown notes" --log="/var/log/$app/$app.log"
+yunohost service add $app --description "Collaborative drawing" --log="/var/log/$app/$app.log"
 
 #=================================================
 # START SYSTEMD SERVICE

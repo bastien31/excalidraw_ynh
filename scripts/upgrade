@@ -22,10 +22,6 @@ is_public=$(ynh_app_setting_get --app=$app --key=is_public)
 final_path=$(ynh_app_setting_get --app=$app --key=final_path)
 port=$(ynh_app_setting_get --app=$app --key=port)
 
-db_name=$(ynh_app_setting_get --app=$app --key=db_name)
-db_user=$db_name
-db_pwd=$(ynh_app_setting_get --app=$app --key=db_pwd)
-
 #=================================================
 # CHECK VERSION
 #=================================================
@@ -42,7 +38,7 @@ ynh_script_progression --message="Backing up $app before upgrading (may take a w
 ynh_backup_before_upgrade
 ynh_clean_setup () {
 	# restore it if the upgrade fails
-	ynh_restore_upgradebackup
+	true
 }
 # Exit if an error occurs during the execution of the script
 ynh_abort_if_errors
@@ -60,30 +56,11 @@ ynh_systemd_action --service_name=$app --action="stop" --log_path="systemd"
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
 
-if [ "$upgrade_type" == "UPGRADE_APP" ]
-then
-	ynh_script_progression --message="Upgrading source files..." --weight=160
+# Remove the app directory securely
+ynh_secure_remove --file=$final_path
 
-	# Create a temporary directory
-	tmpdir="$(mktemp -d)"
-	
-	# Backup the config file in the temp dir
-	cp -a "$final_path/config.json" "$tmpdir/config.json"
-	cp -a "$final_path/.sequelizerc" "$tmpdir/.sequelizerc"
-	
-	# Remove the app directory securely
-	ynh_secure_remove --file=$final_path
-
-	# Download, check integrity, uncompress and patch the source from app.src
-	ynh_setup_source --dest_dir=$final_path
-
-	#Copy the admin saved settings from tmp directory to final path	
-	cp -a "$tmpdir/config.json" "$final_path/config.json" 
-	cp -a "$tmpdir/.sequelizerc" "$final_path/.sequelizerc"
-
-	# Remove the tmp directory securely
-	ynh_secure_remove --file="$tmpdir"
-fi
+# Download, check integrity, uncompress and patch the source from app.src
+ynh_setup_source --dest_dir=$final_path
 
 #=================================================
 # NGINX CONFIGURATION
@@ -126,40 +103,9 @@ then
 	pushd "$final_path" || ynh_die
 
 		ynh_use_nodejs
-		yarn install --frozen-lockfile
-		ynh_exec_warn_less yarn run build
-
+		yarn install
 	popd || ynh_die
 fi
-
-#=================================================
-# MODIFY A CONFIG FILE
-#=================================================
-ynh_script_progression --message="Modifying a config file..." --weight=2
-
-ynh_backup_if_checksum_is_different --file="$final_path/config.json"
-
-# Main config File
-ynh_replace_string --match_string="__PORT__"    --replace_string="$port"         --target_file="../conf/config.json.example"
-ynh_replace_string --match_string="__DOMAIN__"  --replace_string="$domain"       --target_file="../conf/config.json.example"
-ynh_replace_string --match_string="__PATH__"    --replace_string="${path_url:1}" --target_file="../conf/config.json.example"
-ynh_replace_string --match_string="__DB_USER__" --replace_string="$db_user"      --target_file="../conf/config.json.example"
-ynh_replace_string --match_string="__DB_NAME__" --replace_string="$db_name"      --target_file="../conf/config.json.example"
-ynh_replace_string --match_string="__DB_PASS__" --replace_string="$db_pwd"       --target_file="../conf/config.json.example"
-ynh_replace_string --match_string="__APP__"     --replace_string="$app"          --target_file="../conf/config.json.example"
-
-cp ../conf/config.json.example "$final_path/config.json"
-
-# Recalculate and store the checksum of the file for the next upgrade.
-ynh_store_file_checksum --file="$final_path/config.json"
-
-#=================================================
-# SETUP LOGROTATE
-#=================================================
-ynh_script_progression --message="Upgrading logrotate configuration..." --weight=2
-
-# Use logrotate to manage app-specific logfile(s)
-ynh_use_logrotate --non-append
 
 #=================================================
 # SETUP SYSTEMD
@@ -169,7 +115,6 @@ ynh_script_progression --message="Configuring a systemd service..." --weight=2
 ynh_replace_string --match_string="__APP__"       --replace_string="$app"         --target_file="../conf/systemd.service"
 ynh_replace_string --match_string="__FINALPATH__" --replace_string="$final_path"  --target_file="../conf/systemd.service"
 ynh_replace_string --match_string="__ENV_PATH__"  --replace_string="$PATH"        --target_file="../conf/systemd.service"
-ynh_replace_string --match_string="__NODE__"      --replace_string="$nodejs_path" --target_file="../conf/systemd.service"
 ynh_replace_string --match_string="__YNH_NPM__"      --replace_string="$ynh_npm" --target_file="../conf/systemd.service"
 
 # Create a dedicated systemd config
@@ -202,14 +147,14 @@ fi
 #=================================================
 ynh_script_progression --message="Integrating service in YunoHost..."
 
-yunohost service add $app --description "Collaborative Markdown notes" --log="/var/log/$app/$app.log"
+yunohost service add $app --description "Collaborative drawing" --log="/var/log/$app/$app.log"
 
 #=================================================
 # START SYSTEMD SERVICE
 #=================================================
 ynh_script_progression --message="Starting a systemd service..." --weight=1
 
-ynh_systemd_action --service_name=$app --action="start" --log_path="systemd" --line_match="HTTP Server listening"
+ynh_systemd_action --service_name=$app --action="start" --log_path="systemd" #--line_match="HTTP Server listening"
 
 #=================================================
 # RELOAD NGINX

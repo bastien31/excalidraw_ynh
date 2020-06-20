@@ -30,6 +30,16 @@
                 },
                 "example": "excalidraw.domain.org"
             },
+             {
+                "name": "path",
+                "type": "path",
+                "ask": {
+                    "en": "Choose a path for The Excalidraw",
+                    "fr": "Choisissez un chemin pour The Excalidraw"
+                },
+                "example": "/excalidraw",
+                "default": "/excalidraw"
+            },
             {
                 "name": "is_public",
                 "type": "boolean",
