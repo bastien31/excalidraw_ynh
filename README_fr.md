@@ -19,7 +19,7 @@ CodiMD est un service web de traitement de texte collaboratif en temps réel. Il
 
 ## Démo
 
-* [Démo officielle](https://demo.codimd.org/)
+* [Démo officielle](https://excalidraw.com/)
 
 ## Configuration
 
