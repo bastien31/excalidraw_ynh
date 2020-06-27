@@ -15,7 +15,7 @@ excalidraw is a real-time collaborative word processing web service. It uses Mar
 
 ## Screenshots
 
-![](https://demo.excalidraw.org/screenshot.png)
+![]()
 
 ## Demo
 
@@ -23,7 +23,6 @@ excalidraw is a real-time collaborative word processing web service. It uses Mar
 
 ## Configuration
 
-You can configure excalidraw by editing this file `/var/www/excalidraw/config.json` using this the [documentation](https://github.com/excalidraw/server/blob/master/docs/configuration-config-file.md)
 
 ## Documentation
 
@@ -44,8 +43,8 @@ You can configure excalidraw by editing this file `/var/www/excalidraw/config.js
 
 ## Links
 
- * Report a bug: https://github.com/YunoHost-Apps/codimd_ynh/issues
- * Upstream app repository: https://github.com/excalidraw/server/
+ * Report a bug: https://github.com/YunoHost-Apps/excalidraw_ynh/issues
+ * Upstream app repository: https://github.com/excalidraw/excalidraw
  * YunoHost website: https://yunohost.org/
 
 ---

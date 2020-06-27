@@ -15,7 +15,7 @@ CodiMD est un service web de traitement de texte collaboratif en temps réel. Il
 
 ## Captures d'écran
 
-![](https://demo.codimd.org/screenshot.png)
+![]()
 
 ## Démo
 
@@ -23,7 +23,6 @@ CodiMD est un service web de traitement de texte collaboratif en temps réel. Il
 
 ## Configuration
 
-Vous pouvez configurer CodiMD en modifiant le fichier `/var/www/codimd/config.json` et en vous aidant de la [documentation](https://github.com/codimd/server/blob/master/docs/configuration-config-file.md)
 
 ## Documentation
 
@@ -44,7 +43,7 @@ Vous pouvez configurer CodiMD en modifiant le fichier `/var/www/codimd/config.js
 
 ## Liens
 
- * Signaler un bug : https://github.com/YunoHost-Apps/codimd_ynh/issues
+ * Signaler un bug : https://github.com/YunoHost-Apps/excalidraw_ynh/issues
  * Dépôt de l'application principale : https://github.com/excalidraw/excalidraw
  * Site web YunoHost : https://yunohost.org/
 
