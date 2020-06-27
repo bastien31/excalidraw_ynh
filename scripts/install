@@ -106,9 +106,9 @@ ynh_system_user_create --username=$app --home_dir=$final_path
 #==============================================
 ynh_script_progression --message="Building $app... (this will take some time and resources!)" --weight=240
 
+cd /var/www
 git clone https://github.com/excalidraw/excalidraw.git
 
-mv excadidraw/ "$final_path"
 pushd "$final_path" || ynh_die
 
 	npm install
