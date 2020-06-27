@@ -108,7 +108,9 @@ ynh_script_progression --message="Building $app... (this will take some time and
 pushd "$final_path" || ynh_die
 
 	ynh_use_nodejs
-	yarn install
+	npm install
+	#yarn install
+	npm start
 	
 popd || ynh_die
 
