@@ -48,6 +48,7 @@ ynh_script_progression --message="Storing installation settings..." --weight=2
 ynh_app_setting_set --app=$app --key=domain     --value=$domain
 ynh_app_setting_set --app=$app --key=path       --value=$path_url
 ynh_app_setting_set --app=$app --key=is_public  --value=$is_public
+ynh_app_setting_set --app=$app --key=final_path --value=$final_path
 
 #=================================================
 # STANDARD MODIFICATIONS
@@ -78,7 +79,7 @@ ynh_install_extra_app_dependencies --repo="deb https://dl.yarnpkg.com/debian/ st
 #=================================================
 ynh_script_progression --message="Setting up source files..." --weight=2
 
-ynh_app_setting_set --app=$app --key=final_path --value=$final_path
+#ynh_app_setting_set --app=$app --key=final_path --value=$final_path
 # Download, check integrity, uncompress and patch the source from app.src
 # ynh_setup_source --dest_dir=$final_path
 
@@ -105,16 +106,15 @@ ynh_system_user_create --username=$app --home_dir=$final_path
 #==============================================
 ynh_script_progression --message="Building $app... (this will take some time and resources!)" --weight=240
 
-pushd "$final_path" || ynh_die
+pushd "$final_path"
 
 git clone https://github.com/excalidraw/excalidraw.git
 
-	ynh_use_nodejs
 	npm install
 	#yarn install
 	npm start
 	
-popd || ynh_die
+popd
 
 #=================================================
 # SETUP SYSTEMD
@@ -125,7 +125,7 @@ ynh_replace_string --match_string="__APP__"       --replace_string="$app"       
 ynh_replace_string --match_string="__FINALPATH__" --replace_string="$final_path"  --target_file="../conf/systemd.service"
 ynh_replace_string --match_string="__ENV_PATH__"  --replace_string="$PATH"        --target_file="../conf/systemd.service"
 ynh_replace_string --match_string="__NODE__"      --replace_string="$nodejs_path" --target_file="../conf/systemd.service"
-ynh_replace_string --match_string="__YNH_NPM__"      --replace_string="$ynh_npm" --target_file="../conf/systemd.service"
+ynh_replace_string --match_string="__YNH_NPM__"   --replace_string="$ynh_npm" --target_file="../conf/systemd.service"
 
 ynh_add_systemd_config
 
