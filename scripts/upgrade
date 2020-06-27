@@ -103,7 +103,9 @@ then
 	pushd "$final_path" || ynh_die
 
 		ynh_use_nodejs
+		
 		yarn install
+
 	popd || ynh_die
 fi
 
