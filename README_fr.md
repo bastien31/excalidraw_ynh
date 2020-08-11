@@ -38,7 +38,7 @@ CodiMD est un service web de traitement de texte collaboratif en temps réel. Il
 
 #### Architectures supportées
 
-* x86-64b - [![Build Status](https://ci-apps.yunohost.org/ci/logs/excalidraw%20%28Apps%29.svg)](https://ci-apps.yunohost.org/ci/apps/excalidraw/)
+* x86-64 - [![Build Status](https://ci-apps.yunohost.org/ci/logs/excalidraw%20%28Apps%29.svg)](https://ci-apps.yunohost.org/ci/apps/excalidraw/)
 * ARMv8-A - [![Build Status](https://ci-apps-arm.yunohost.org/ci/logs/excalidraw%20%28Apps%29.svg)](https://ci-apps-arm.yunohost.org/ci/apps/excalidraw/)
 
 ## Liens
@@ -49,8 +49,7 @@ CodiMD est un service web de traitement de texte collaboratif en temps réel. Il
 
 ---
 
-Informations pour les développeurs
-----------------
+## Informations pour les développeurs
 
 Merci de faire vos pull request sur la [branche testing](https://github.com/YunoHost-Apps/codimd_ynh/tree/testing).
 

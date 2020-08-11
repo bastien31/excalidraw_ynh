@@ -32,7 +32,7 @@ upgrade_type=$(ynh_check_app_version_changed)
 #=================================================
 # BACKUP BEFORE UPGRADE THEN ACTIVE TRAP
 #=================================================
-ynh_script_progression --message="Backing up $app before upgrading (may take a while)..." --weight=120
+ynh_script_progression --message="Backing up $app before upgrading (may take a while)..." --weight=20
 
 # Backup the current version of the app
 ynh_backup_before_upgrade
@@ -98,14 +98,11 @@ ynh_system_user_create --username=$app
 #==============================================
 if [ "$upgrade_type" == "UPGRADE_APP" ]
 then
-	ynh_script_progression --message="Building $app... (this will take some time and resources!)" --weight=160
+	ynh_script_progression --message="Building $app... (this will take some time and resources!)" --weight=60
 
-	pushd "$final_path" || ynh_die
-
+	pushd "$final_path" || ynh_die		
 		ynh_use_nodejs
-		
-		npm install
-
+		yarn install	
 	popd || ynh_die
 fi
 
@@ -114,10 +111,8 @@ fi
 #=================================================
 ynh_script_progression --message="Configuring a systemd service..." --weight=2
 
-ynh_replace_string --match_string="__APP__"       --replace_string="$app"         --target_file="../conf/systemd.service"
-ynh_replace_string --match_string="__FINALPATH__" --replace_string="$final_path"  --target_file="../conf/systemd.service"
-ynh_replace_string --match_string="__ENV_PATH__"  --replace_string="$PATH"        --target_file="../conf/systemd.service"
-ynh_replace_string --match_string="__YNH_NPM__"      --replace_string="$ynh_npm" --target_file="../conf/systemd.service"
+ynh_replace_string --match_string="__ENV_PATH__" --replace_string="$PATH"    --target_file="../conf/systemd.service"
+ynh_replace_string --match_string="__YNH_NPM__"  --replace_string="$ynh_npm" --target_file="../conf/systemd.service"
 
 # Create a dedicated systemd config
 ynh_add_systemd_config
@@ -131,18 +126,6 @@ ynh_script_progression --message="Securing files and directories..."
 
 # Set permissions on app files
 chown -R $app:$app $final_path
-
-#=================================================
-# SETUP SSOWAT
-#=================================================
-ynh_script_progression --message="Upgrading SSOwat configuration..." --weight=1
-
-# Make app public if necessary
-if [ $is_public -eq 1 ]
-then
-	# unprotected_uris allows SSO credentials to be passed anyway
-	ynh_app_setting_set --app=$app --key=unprotected_uris --value="/"
-fi
 
 #=================================================
 # INTEGRATE SERVICE IN YUNOHOST

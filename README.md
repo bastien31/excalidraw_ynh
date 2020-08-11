@@ -49,8 +49,7 @@ excalidraw is a real-time collaborative word processing web service. It uses Mar
 
 ---
 
-Developer info
-----------------
+## Developer info
 
 Please send your pull request to the [testing branch](https://github.com/YunoHost-Apps/excalidraw_ynh/tree/testing).
 
