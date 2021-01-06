@@ -11,7 +11,7 @@ If you don't have YunoHost, please consult [the guide](https://yunohost.org/#/in
 ## Overview
 excalidraw is a real-time collaborative word processing web service. It uses Markdown language.
 
-**Shipped version:** 1.6.0
+**Shipped version:** 1.0.0
 
 ## Screenshots
 
@@ -55,7 +55,7 @@ Please send your pull request to the [testing branch](https://github.com/YunoHos
 
 To try the testing branch, please proceed like that.
 ```
-sudo yunohost app install https://github.com/YunoHost-Apps/codimd_ynh/tree/testing --debug
+sudo yunohost app install https://github.com/YunoHost-Apps/excalidraw_ynh/tree/testing --debug
 or
 sudo yunohost app upgrade excalidraw -u https://github.com/YunoHost-Apps/excalidraw_ynh/tree/testing --debug
 ```

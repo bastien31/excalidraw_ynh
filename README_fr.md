@@ -1,17 +1,17 @@
 # Excalidraw pour YunoHost
 
 [![Niveau d'intégration](https://dash.yunohost.org/integration/excalidraw.svg)](https://dash.yunohost.org/appci/app/excalidraw) ![](https://ci-apps.yunohost.org/ci/badges/excalidraw.status.svg) ![](https://ci-apps.yunohost.org/ci/badges/excalidraw.maintain.svg)  
-[![Installer Excalidraw avec YunoHost](https://install-app.yunohost.org/install-with-yunohost.png)](https://install-app.yunohost.org/?app=excalidraw)
+[![Installer Excalidraw avec YunoHost](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=excalidraw)
 
 *[Read this readme in english.](./README.md)* 
 
-> *Ce package vous permet d'installer Excalidraw rapidement et simplement sur un serveur Yunohost.  
+> *Ce package vous permet d'installer Excalidraw rapidement et simplement sur un serveur YunoHost.  
 Si vous n'avez pas YunoHost, consultez [le guide](https://yunohost.org/#/install) pour apprendre comment l'installer.*
 
 ## Vue d'ensemble
 CodiMD est un service web de traitement de texte collaboratif en temps réel. Il utilise le langage Markdown.
 
-**Version incluse :** 1.6.0
+**Version incluse :** 1.0.0
 
 ## Captures d'écran
 
@@ -22,7 +22,6 @@ CodiMD est un service web de traitement de texte collaboratif en temps réel. Il
 * [Démo officielle](https://excalidraw.com/)
 
 ## Configuration
-
 
 ## Documentation
 
@@ -51,7 +50,7 @@ CodiMD est un service web de traitement de texte collaboratif en temps réel. Il
 
 ## Informations pour les développeurs
 
-Merci de faire vos pull request sur la [branche testing](https://github.com/YunoHost-Apps/codimd_ynh/tree/testing).
+Merci de faire vos pull request sur la [branche testing](https://github.com/YunoHost-Apps/excalidraw_ynh/tree/testing).
 
 Pour essayer la branche testing, procédez comme suit.
 ```

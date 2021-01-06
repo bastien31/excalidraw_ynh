@@ -1,5 +1,5 @@
 SOURCE_URL=https://github.com/excalidraw/excalidraw/archive/master.tar.gz
-SOURCE_SUM=b54bb864fb2bd6b1a662321ad07cd4ecb3a2d90454a8ae525a0340bbc31ba224
+SOURCE_SUM=651ec58edf2d68e75fc7a5d4a59da0565d3591735b1dad632560f8b110499c9c
 SOURCE_SUM_PRG=sha256sum
 SOURCE_FORMAT=tar.gz
 SOURCE_IN_SUBDIR=true
